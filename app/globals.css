@@ -112,41 +112,156 @@
     }
 }
 
-@layer utilities {
-    .perspective {
-        perspective: 1200px;
+.balloon {
+    position: absolute;
+    bottom: -100px;
+    pointer-events: none;
+    animation: balloonFloat 4s ease-out forwards;
+    will-change: transform;
+}
+
+@keyframes balloonFloat {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.95);
+        opacity: 1;
     }
 
-    .flip-top {
-        @apply absolute top-0 left-0 w-full h-1/2 flex justify-center items-end font-mono font-bold bg-gradient-to-br from-gray-100 to-gray-300;
-        backface-visibility: hidden;
-        transform-origin: bottom;
-        animation: flipTop 0.65s ease-in forwards;
+    50% {
+        transform: translate3d(var(--drift), -100vh, 0);
     }
 
-    .flip-bottom {
-        @apply absolute bottom-0 left-0 w-full h-1/2 flex justify-center items-start font-mono font-bold bg-gradient-to-br from-gray-100 to-gray-300;
-        backface-visibility: hidden;
-        transform-origin: top;
-        transform: rotateX(90deg);
-        animation: flipBottom 0.65s ease-out forwards;
+    100% {
+        transform: translate3d(calc(var(--drift) * 1.4), -250vh, 0) scale(1.05);
+        opacity: 0;
     }
 }
 
-@keyframes flipTop {
-    from {
-        transform: rotateX(0deg);
+.confetti-piece {
+    position: absolute;
+    bottom: 0;
+    width: 8px;
+    height: 14px;
+    background: hsl(var(--h), 90%, 65%);
+    opacity: 0.9;
+    pointer-events: none;
+    animation:
+        confettiPath var(--d) ease-out forwards,
+        confettiPulse 0.6s ease-in-out infinite;
+}
+
+@keyframes confettiPath {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
     }
-    to {
-        transform: rotateX(-90deg);
+
+    30% {
+        transform: translate3d(var(--x1), -40vh, 0) rotate(var(--r));
+    }
+
+    100% {
+        transform: translate3d(var(--x2), 110vh, 0) rotate(calc(var(--r) * 1.3));
+        opacity: 0;
     }
 }
 
-@keyframes flipBottom {
-    from {
-        transform: rotateX(90deg);
+@keyframes confettiPulse {
+    0%,
+    100% {
+        transform: scale(1);
     }
-    to {
-        transform: rotateX(0deg);
+    50% {
+        transform: scale(1.2);
     }
+}
+
+.floating-confetti,
+.floating-emoji {
+    position: absolute;
+    bottom: -40px;
+    pointer-events: none;
+    animation: floatUp 4s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.9) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate3d(var(--drift), -50vh, 0) scale(1) rotate(360deg);
+    }
+    100% {
+        transform: translate3d(calc(var(--drift) * 1.2), -120vh, 0) scale(1.05)
+            rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@keyframes emojiPath {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+        opacity: 1;
+    }
+
+    35% {
+        transform: translate3d(var(--x1), -45vh, 0) rotate(var(--r));
+    }
+
+    100% {
+        transform: translate3d(var(--x2), 120vh, 0) rotate(calc(var(--r) * 1.2));
+        opacity: 0;
+    }
+}
+
+@keyframes emojiPulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.25);
+    }
+}
+
+@keyframes pulsate {
+    0%,
+    100% {
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes softPulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.04);
+    }
+}
+
+.animate-soft-pulse {
+    animation: softPulse 3s ease-in-out infinite;
+}
+
+@keyframes heartFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.6);
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-180px) scale(1.6);
+    }
+}
+
+.animate-heart-float {
+    animation: heartFloat 1.2s ease-out forwards;
 }
