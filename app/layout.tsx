@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Happy Birthday",
-  description: "loda lele bhenkilodi",
+  description: "🤫",
 };
 
 export default function RootLayout({
